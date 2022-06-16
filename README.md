@@ -1,3 +1,19 @@
+# Hackathon ArgoCD Python FastApi Example
+
+
+
+## Requirements
+You will need the following installed to follow this example:
+- Helm
+- Kubectl
+- Docker
+- Python 3.9
+- Minikube
+- Npm 8.5.5
+- Node 16.15.0
+
+
+
 ## Minikube Config and Helm Deployment
 ```bash
 minikube start --driver=docker
@@ -87,6 +103,7 @@ kubectl apply -n argocd -f dev/apps/python-fastapi-application.yaml
 ```
 
 
+
 ### ArgoCD CLI Example with Express API
 There is also fancy argocd cli you can use to setup apps in your cluster. Commands below show you how I deploy a nodejs express app using it.
 
@@ -101,8 +118,12 @@ kubectl get secret -n argocd argocd-initial-admin-secret -o jsonpath="{.data.pas
 argocd login localhost:30082
 
 # Setup an application using the cli
+argocd proj create node \
+    -d https://kubernetes.default.svc,apps \
+    -s git@github.com:jhawthorn22/argocd-config-example.git
+
 argocd app create argocd-nodejs-express \
-    --project default \
+    --project node \
     --revision HEAD \
     --repo git@github.com:jhawthorn22/argocd-config-example.git \
     --path charts/apps \
@@ -117,6 +138,32 @@ argocd app create argocd-nodejs-express \
     --sync-retry-limit 5 \
     --label "depoyed-via-argocd-cli=true"
 
+```
+
+
+
+### ArgoCD CLI Python API Example
+```bash
+# Setup an application using the cli
+argocd proj create python \
+    -d https://kubernetes.default.svc,apps \
+    -s git@github.com:jhawthorn22/argocd-config-example.git
+
+argocd app create argocd-python-fastapi \
+    --project node \
+    --revision HEAD \
+    --repo git@github.com:jhawthorn22/argocd-config-example.git \
+    --path charts/apps \
+    --release-name argocd-python-fastapi \
+    --values "../../dev/values/python-fastapi-values.yaml" \
+    --dest-server https://kubernetes.default.svc \
+    --dest-namespace apps \
+    --sync-policy auto \
+    --sync-option CreateNamespace=true \
+    --self-heal \
+    --auto-prune \
+    --sync-retry-limit 5 \
+    --label "depoyed-via-argocd-cli=true"
 ```
 
 
