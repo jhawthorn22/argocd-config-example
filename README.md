@@ -14,15 +14,6 @@ minikube start \
 
 kubectl config get-contexts
 kubectl config set-context minikube
-
-# Helm install app
-kubectl create namespace apps
-helm upgrade --install argocd-python-fastapi charts/apps \
-    --namespace apps \
-    --values apps/fastapi/helm-config/minikube.yaml
-
-# Run a simple curl to check
-curl http://localhost:30080/items/5\?q\=somequery
 ```
 
 
@@ -89,10 +80,10 @@ kubectl create secret generic github-private-key \
     --namespace argocd
 
 # Update ArgoCD config map with repo ssh creds
-kubectl apply -n argocd -f argocd/argocd-repos-configmap.yaml
+kubectl apply -n argocd -f minikube-setup/argocd-repos-configmap.yaml
 
 # Deploy argo cd application
-kubectl apply -n argocd -f argocd/application.yaml
+kubectl apply -n argocd -f dev/apps/python-fastapi-application.yaml
 ```
 
 

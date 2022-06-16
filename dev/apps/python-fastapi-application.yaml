@@ -7,7 +7,7 @@ spec:
   project: default # you can group certain applications inside argocd
   
   source:
-    repoURL: git@github.com:jhawthorn22/azure-argocd-gitops.git
+    repoURL: git@github.com:jhawthorn22/argocd-config-example.git
     targetRevision: HEAD
     path: charts/apps
     

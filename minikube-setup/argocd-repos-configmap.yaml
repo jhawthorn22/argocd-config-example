@@ -8,7 +8,7 @@ metadata:
     app.kubernetes.io/part-of: argocd
 data:
   repositories: |
-    - url: git@github.com:jhawthorn22/azure-argocd-gitops.git
+    - url: git@github.com:jhawthorn22/argocd-config-example.git
       sshPrivateKeySecret:
         name: github-private-key
         key: privateKey
