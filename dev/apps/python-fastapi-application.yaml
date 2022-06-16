@@ -1,0 +1,36 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: argocd-python-fastapi
+  namespace: argocd
+spec:
+  project: default # you can group certain applications inside argocd
+  
+  source:
+    repoURL: git@github.com:jhawthorn22/azure-argocd-gitops.git
+    targetRevision: HEAD
+    path: charts/apps
+    
+    helm:
+      # Release name override (defaults to application name)
+      releaseName: argocd-python-fastapi
+
+      # Helm values files for overriding values in the helm chart
+      # The path is relative to the spec.source.path directory defined above
+      valueFiles:
+      - ../../dev/values/python-fastapi-values.yaml
+  
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: apps
+  
+  syncPolicy:
+    syncOptions:
+    - CreateNamespace=true
+    # NOTE: polling every 3 minutes by default, can use a webhook to make it instant!
+    # NOTE2: self healing functions disabled by default, so we need to enable them
+    automated:
+      selfHeal: true # prevent manual changes, 
+      prune: true # remove resources no longer defined
+    retry:
+      limit: 3
