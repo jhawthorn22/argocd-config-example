@@ -87,7 +87,7 @@ kubectl apply -n argocd -f dev/apps/python-fastapi-application.yaml
 ```
 
 
-### ArgoCD CLI
+### ArgoCD CLI Example with Express API
 There is also fancy argocd cli you can use to setup apps in your cluster. Commands below show you how I deploy a nodejs express app using it.
 
 ```bash
@@ -101,13 +101,13 @@ kubectl get secret -n argocd argocd-initial-admin-secret -o jsonpath="{.data.pas
 argocd login localhost:30082
 
 # Setup an application using the cli
-argocd app create argocd-python-fastapi \
+argocd app create argocd-nodejs-express \
     --project default \
     --revision HEAD \
     --repo git@github.com:jhawthorn22/argocd-config-example.git \
     --path charts/apps \
-    --release-name argocd-python-fastapi \
-    --values "../../dev/values/python-fastapi-values.yaml" \
+    --release-name argocd-nodejs-express \
+    --values "../../dev/values/nodejs-express-values.yaml" \
     --dest-server https://kubernetes.default.svc \
     --dest-namespace apps \
     --sync-policy auto \

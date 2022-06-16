@@ -1,0 +1,27 @@
+replicaCount: 3
+
+image:
+  repository: jhawthorn22/argocd-nodejs-express
+  pullPolicy: IfNotPresent
+  tag: 3.0.0
+
+service:
+  type: NodePort
+  port: 80
+  nodePort: 30083
+
+resources:
+  limits:
+    cpu: 100m
+    memory: 128Mi
+  requests:
+    cpu: 100m
+    memory: 128Mi
+
+livenessProbe:
+  initialDelaySeconds: 20
+  periodSeconds: 5
+
+readinessProbe:
+  initialDelaySeconds: 20
+  periodSeconds: 5

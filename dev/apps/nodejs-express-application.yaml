@@ -4,7 +4,7 @@ metadata:
   name: argocd-python-fastapi
   namespace: argocd
 spec:
-  project: python # you can group certain applications inside argocd
+  project: node # you can group certain applications inside argocd
   
   source:
     repoURL: git@github.com:jhawthorn22/argocd-config-example.git
@@ -18,7 +18,7 @@ spec:
       # Helm values files for overriding values in the helm chart
       # The path is relative to the spec.source.path directory defined above
       valueFiles:
-      - ../../dev/values/python-fastapi-values.yaml
+      - ../../dev/values/nodejs-express-values.yaml
   
   destination:
     server: https://kubernetes.default.svc
